@@ -2,23 +2,20 @@
   <div>
     <!-- Hide By status Bar -->
     <div class="hideBar">
-      <div class="hideLabel"> Select Status that you want to hide from the table</div>
-      
+      <div class="hideLabel"> Select Status that you want to hide </div>
+
       <div class="checkbox">
         <!-- All status -->
-        <div>
-          <label :for="statuses">All statuses</label>
-            <input
-              :id="statuses"
-              type="checkbox"
-              class="styled"
-              :value="statuses"
-              @click="hideShowALLstatus(statuses)"
-            />
-        </div>
-
+        <label :for="getStatuses">All statuses</label>
+          <input
+            :id="getStatuses"
+            type="checkbox"
+            class="styled"
+            :value="getStatuses"
+            @click="tableStore.hideShowALLstatus"
+          />
         <!-- Dynamic status -->
-        <div v-for="status in statuses" :key="status">
+        <div v-for="status in getStatuses" :key="status">
           <label :for="`${status}`">
             {{ status }}
           </label>
@@ -28,7 +25,8 @@
             type="checkbox"
             class="styled"
             :value="status"
-            v-model="hidestatus"
+            v-model="tableStore.getHideState"
+            @click="tableStore.handleCheckedBox(status)"
           />
         </div>
       </div>
@@ -38,38 +36,23 @@
 </template>
 
 <script>
+import { useTableStore }  from '../store/TableStore';
+
 export default {
-   props: ['statuses'],
-  
-  data() {
-    return {
-      hidestatus: [],
-      allCheckBox: [],
-      allCheck: false,
-    }
+
+  setup() {
+    const tableStore = useTableStore()
+
+    return { tableStore }
   },
 
-  methods: {
-    hideShowALLstatus(statuses) {
-      if (!document.querySelector(".styled").checked) {
-        this.hidestatus = [];
-        this.allCheckBox = [];
-      }
 
-      if (document.querySelector(".styled").checked) {
-        this.hidestatus = statuses
-        this.allCheckBox = statuses
-      }
-
-      this.allCheck = !this.allCheck;
-
-      if (this.allCheck) {
-      } else {
-        this.hidestatus = [];
-        this.allCheckBox = [];
-      }
+    computed: {
+      getStatuses() {
+        return this.tableStore.productDataBystatus.status
+      },
     },
-  }
+
 }
 </script>
 
@@ -87,7 +70,6 @@ export default {
   list-style: none;
   display: flex;
   justify-content: flex-start;
-  column-gap: 10px;
 
 }
 
