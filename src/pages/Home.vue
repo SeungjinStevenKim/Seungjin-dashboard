@@ -1,14 +1,19 @@
 <template>
     <StatusBar :statuses="productDataBystatus.status"/>
+    <table>
+      <TableHeader/>
+    </table>
 </template>
 
 
 <script>
 import Data from "../assets/data.json";
 import StatusBar from '../components/StatusBar.vue';
+import Table from '../components/table.vue';
+import TableHeader from '../components/TableHeader.vue';
 
 export default {
-    components: { StatusBar },
+    components: { StatusBar, TableHeader, Table },
 
     data() {
         return {
@@ -56,3 +61,39 @@ export default {
 
 }
 </script>
+
+<style>
+
+table {
+  width: 100%;
+  white-space: nowrap !important;
+}
+
+table td {
+  position: relative;
+}
+
+i {
+  cursor: pointer;
+}
+
+table tr td:not(.skip),
+table tr th {
+  text-align: center;
+}
+
+td,
+th {
+  padding: 2px !important;
+  width: 100px;
+  border: 1px solid black;
+
+}
+
+.width1 {
+  width: 1%;
+  /* white-space: nowrap !important; */
+}
+
+
+</style>

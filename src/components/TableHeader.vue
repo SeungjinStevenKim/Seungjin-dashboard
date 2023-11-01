@@ -20,3 +20,37 @@
 </template>
 
 
+<script>
+export default {
+  data: function () {
+    return {
+      wwInfo: {},
+    };
+  },
+  mounted() {
+    this.wwInfo = this.getWWFromDate();
+  },
+  computed: {
+    wwData() {
+      return `${this.wwInfo.year}WW${this.wwInfo.workweek}.${this.wwInfo.numofday}`;
+    }
+  },
+  methods: {
+    getWWFromDate(date = null) {
+      let currentDate = date || new Date();
+      let startDate = new Date(currentDate.getFullYear(), 0, 1);
+      let days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
+
+      return {
+        year: currentDate.getFullYear(),
+        workweek: Math.ceil(days / 7),
+        numofday: currentDate.getDay(),
+      };
+    }
+  }
+}
+</script>
+
+
+
+
