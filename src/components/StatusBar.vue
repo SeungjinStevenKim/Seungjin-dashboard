@@ -2,11 +2,12 @@
   <div>
     <!-- Hide By status Bar -->
     <div class="hideBar">
-      <div class="hideLabel"> Select Status that you want to hide </div>
+      <div class="hideLabel"> Select Status that you want to hide from below table</div>
 
       <div class="checkbox">
         <!-- All status -->
-        <label :for="getStatuses">All statuses</label>
+        <div>
+          <label :for="getStatuses">All statuses</label>
           <input
             :id="getStatuses"
             type="checkbox"
@@ -14,6 +15,7 @@
             :value="getStatuses"
             @click="tableStore.hideShowALLstatus"
           />
+        </div>
         <!-- Dynamic status -->
         <div v-for="status in getStatuses" :key="status">
           <label :for="`${status}`">
@@ -70,6 +72,7 @@ export default {
   list-style: none;
   display: flex;
   justify-content: flex-start;
+  column-gap: 20px;
 
 }
 
