@@ -3,7 +3,7 @@
         <template v-for="(data, status, index) in getProducts">
           <!-- status -->
           <tr>
-            <td class="width1" :rowspan="calstatusRowspan(data)">
+            <td :style="{backgroundColor: statusColor[status] }" class="width1" :rowspan="calstatusRowspan(data)">
               {{ status }}
             </td>
           </tr>
@@ -11,36 +11,36 @@
           <template v-for="cores in Object.keys(data)">
             <!-- cores -->
             <tr>
-              <td class="width1" :rowspan="Object.keys(data[cores]).length + 1">
+              <td  :style="{backgroundColor: statusColor[status] }" class="width1" :rowspan="Object.keys(data[cores]).length + 1" >
                 {{ cores }}
               </td>
             </tr>
 
             <tr v-for="(v, k) in data[cores]">
               <!-- product -->
-              <td class="productColumn">{{ v.Product }}</td>
+              <td  :style="{backgroundColor: statusColor[status] }" class="productColumn">{{ v.Product }}</td>
 
               <!-- Lithography -->
-              <td>{{ v.Lithography }}</td>
+              <td  :style="{backgroundColor: statusColor[status] }">{{ v.Lithography }}</td>
 
               <!-- Threads -->
               <td>
                 <div class="innerCells">
-                  <input :value="v.Threads" :disabled="true" type="text" />
+                  <input  :style="{backgroundColor: statusColor[status] }" :value="v.Threads" :disabled="true" type="text" />
                 </div>
               </td>
 
               <!-- Base Freq -->
               <td>
                 <div class="innerCells">
-                  <input :value="v.Base_Freq" :disabled="true" type="text" />
+                  <input  :style="{backgroundColor: statusColor[status] }" :value="v.Base_Freq" :disabled="true" type="text" />
                 </div>
               </td>
 
               <!-- Max Turbo Freq -->
               <td>
                 <div class="innerCells">
-                  <input :value="v.Max_Turbo_Freq" type="text" :disabled="true" />
+                  <input  :style="{backgroundColor: statusColor[status] }" :value="v.Max_Turbo_Freq" type="text" :disabled="true" />
                 </div>
               </td>
             </tr>
@@ -52,17 +52,28 @@
 
 <script>
 import { useTableStore }  from '../store/TableStore';
+import { colorGenerator } from '../utils/colorGenerator';
 
 export default {
-    setup() {
-    const tableStore = useTableStore()
-
-    return { tableStore }
+    data: function () {
+    return {
+      statusColor: {},
+      tableStore : useTableStore()
+    };
+  },
+  mounted() {
+    for (const status in  this.getStatuses) {
+      var color = colorGenerator(this.getStatuses[status])
+      this.statusColor[this.getStatuses[status]] = color
+    }
   },
 
   computed: {
     getProducts() {
       return this.tableStore.productDataBystatus.data
+    },
+    getStatuses() {
+      return this.tableStore.productDataBystatus.status
     }
   },
 
