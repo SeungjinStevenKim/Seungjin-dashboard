@@ -64,14 +64,12 @@ export const useTableStore = defineStore("TableStore", {
           },
 
           handleCheckedBox(status) {
-            if (this.allCheck && this.hidestatus.includes(status)) {
+            if (this.hidestatus.includes(status)) {
                 this.hidestatus =  this.hidestatus.filter(elem => elem !== status)
-            } else if (this.allCheck && !this.hidestatus.includes(status)) {
-                this.hidestatus.push(status);
-            } else if (!this.allCheck && !this.hidestatus.includes(status)){
-                this.hidestatus.push(status);
+            } else {
+              this.hidestatus.push(status);
             }
-             
-    }
+
+            }
 }
 })
