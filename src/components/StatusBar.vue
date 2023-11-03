@@ -63,13 +63,17 @@ export default {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
+  align-items: center;
+}
 
+.hideLabel {
+  font-weight: bold;
 }
 
 .checkbox {
   list-style: none;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   column-gap: 20px;
 
 }

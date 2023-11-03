@@ -3,11 +3,8 @@
       <ProductTableHeader/>
       <ProductTableDetails/>
     </table>
-
-    <div class="pagination-outter-container">
-        <Pagination @changePage="changePage" :noOfItems="getNumberOfProducts" :currentPage="getCurrentPage" />
-    </div>
-
+    
+    <Pagination @changePage="changePage" :noOfItems="getNumberOfProducts" :currentPage="getCurrentPage" />
 </template>
 
 
@@ -46,14 +43,4 @@ export default {
 
 }
 </script>
-
-<style scoped>
-
-.pagination-outter-container {
-    display: flex;
-    flex-direction: row-reverse;
-}
-
-</style>>
-
 
