@@ -1,23 +1,29 @@
 <template>
+  <div class="layout">
     <StatusBar/>
-    <table>
-      <TableHeader/>
-      <TableProductDetails/>
-    </table>
+    <ProductTable/>
+  </div>
+
 </template>
 
 
 <script>
+import ProductTable from '../components/ProductTable.vue';
 import StatusBar from '../components/StatusBar.vue';
-import TableHeader from '../components/TableHeader.vue';
-import TableProductDetails from '../components/TableProductDetails.vue';
 
 export default {
-    components: { StatusBar, TableHeader, TableProductDetails },
+    components: { StatusBar, ProductTable}
 }
 </script>
 
 <style>
+
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
 
 table {
   width: 100%;

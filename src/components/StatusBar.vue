@@ -1,5 +1,4 @@
 <template>
-  <div>
     <!-- Hide By status Bar -->
     <div class="hideBar">
       <div class="hideLabel"> Select Status that you want to hide from below table</div>
@@ -27,14 +26,13 @@
             type="checkbox"
             class="styled"
             :value="status"
-            v-model="tableStore.getHideState"
-            @click="tableStore.handleCheckedBox(status)"
+            v-model="tableStore.getHiddenStatus"
+            @click="tableStore.hideShowStatus(status)"
           />
         </div>
       </div>
 
     </div>
-  </div>    
 </template>
 
 <script>
@@ -49,11 +47,11 @@ export default {
   },
 
 
-    computed: {
-      getStatuses() {
-        return this.tableStore.productDataBystatus.status
-      },
+  computed: {
+    getStatuses() {
+      return this.tableStore.getStatusesForAllProducts
     },
+  },
 
 }
 </script>

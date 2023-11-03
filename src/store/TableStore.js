@@ -3,73 +3,101 @@ import data from "../assets/data.json";
 
 
 export const useTableStore = defineStore("TableStore", {
-
     state: () => {
-
         //state
         return {
-            hidestatus: [],
-            products: data,
+            hiddenStatus: [],
             allCheck: false,
+            currentPage: 1
         }
-
     },
 
-
     getters: {
-        getHideState: (state) => state.hidestatus,
-        productDataBystatus: (state) => {
-            let tmp = {};
+        getCurrentPage: (state) => state.currentPage,
+        getHiddenStatus: (state) => state.hiddenStatus,
+        getStatusesForAllProducts: (state) => {
             let statusSet = new Set();
-    
-            state.products.forEach((element) => {
+            data.forEach((element) => {
               let status = element.Status;
-              let cores = element.Cores;
-    
               // push status to set
               statusSet.add(status);
     
-              if (state.hidestatus.includes(status)) return; // Hide by status
-              if (!tmp[status]) tmp[status] = {};
-              if (!tmp[status][cores]) tmp[status][cores] = [];
-    
-              tmp[status][cores].push(element);
             });
-    
+            
             // sort status in order
             const strings = new Set(statusSet);
             const sortedStringsArray = [...strings].sort();
             statusSet = new Set(sortedStringsArray);
-    
-            return {
-              status: [...statusSet],
-              data: tmp,
-            };
-        }
-    },
+            return [...statusSet];
+        },
 
+        getFilteredProductLength: (state) =>{
+          let sum = 0 
+          data.forEach((element) => {
+            let status = element.Status;
+
+            // push status to set    
+            if (state.hiddenStatus.includes(status)) return; // Hide by status
+            sum += 1
+
+          });
+          return sum;
+        },
+
+        getProductsByPage: (state) => (page = 1) => {
+          let tmp = {};
+          let counter = 0;
+          let initialIndex = (page -1) * 100;
+          let end = initialIndex + 100;
+
+          data.forEach((element) => {
+            let status = element.Status;
+            let cores = element.Cores;
+
+  
+            if (state.hiddenStatus.includes(status)) return; // Hide by status
+            if (!tmp[status]) tmp[status] = {};
+            if (!tmp[status][cores]) tmp[status][cores] = [];
+            
+            if(counter >= initialIndex  && counter < end){
+              tmp[status][cores].push(element);
+            }
+            counter ++;
+
+          });
+          return tmp
+        }
+        
+    },
     actions: {
         hideShowALLstatus() {
             if (!document.querySelector(".styled").checked) {
-              this.hidestatus = [];
+              this.hiddenStatus = [];
             }      
             if (document.querySelector(".styled").checked) {
-              this.hidestatus = this.productDataBystatus.status;
+              this.hiddenStatus = this.getStatusesForAllProducts
             }     
             this.allCheck = !this.allCheck;
             if (this.allCheck) {
             } else {
-              this.hidestatus = [];
+              this.hiddenStatus = [];
             }
+            this.setCurrentPage(1);
           },
 
-          handleCheckedBox(status) {
-            if (this.hidestatus.includes(status)) {
-                this.hidestatus =  this.hidestatus.filter(elem => elem !== status)
+          hideShowStatus(status) {
+            if (this.hiddenStatus.includes(status)) {
+                this.hiddenStatus =  this.hiddenStatus.filter(elem => elem !== status)
             } else {
-              this.hidestatus.push(status);
+              this.hiddenStatus.push(status);
             }
+            this.setCurrentPage(1);
 
-            }
+            
+          },
+
+          setCurrentPage(page) {
+            this.currentPage = page;
+          }
 }
 })
