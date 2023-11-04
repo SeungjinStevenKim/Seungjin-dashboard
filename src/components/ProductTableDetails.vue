@@ -1,6 +1,6 @@
 <template>
     <tbody>
-        <template v-for="(data, status, index) in getFilteredProductsByPage(getCurrentPage)" :key="index">
+        <template v-for="(data, status, index) in getFilteredProductsByPage" :key="index">
           <template v-for="cores in Object.keys(data)">
             <tr :style="{backgroundColor: statusColor[status] }" v-for="(v, k) in data[cores] " :key="k">
               <!-- status -->
