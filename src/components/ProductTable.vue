@@ -11,7 +11,7 @@
 <script>
 import ProductTableHeader from './ProductTableHeader.vue';
 import ProductTableDetails from './ProductTableDetails.vue';
-import Pagination from './Pagination.vue';
+import Pagination from './baseComponents/Pagination.vue';
 import { useTableStore }  from '../store/TableStore';
 
 
