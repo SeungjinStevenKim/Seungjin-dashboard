@@ -1,18 +1,21 @@
 <template>
     <tbody>
         <template v-for="(data, status, index) in getFilteredProductsByPage" :key="index">
+          <!-- status -->
+          <tr>
+            <td class="width1" :rowspan="calstatusRowspan(data)" :style="{backgroundColor: statusColor[status] }">
+              {{ status }}
+            </td>
+          </tr>
+
           <template v-for="cores in Object.keys(data)">
-            <tr :style="{backgroundColor: statusColor[status] }" v-for="(v, k) in data[cores] " :key="k">
-              <!-- status -->
-                <td class="width1" >
-                  {{ v.Status }}
-                </td>
+            <tr>
+              <td class="width1" :rowspan="Object.keys(data[cores]).length + 1" :style="{backgroundColor: statusColor[status] }">
+                {{ cores }}
+              </td>
+            </tr>
 
-              <!-- cores -->
-                <td  class="width1">
-                  {{ v.Cores }}
-                </td>
-
+            <tr v-for="(v, k) in data[cores] " :key="k" :style="{backgroundColor: statusColor[status] }">
               <!-- product -->
               <td class="productColumn">{{ v.Product }}</td>
 
@@ -75,6 +78,16 @@ export default {
       return this.tableStore.getCurrentPage
     }
   },
+
+  methods: {
+        calstatusRowspan(data) {
+      let sum = Object.keys(data).length + 1;
+      for (const cores in data) {
+        sum += Object.keys(data[cores]).length;
+      }
+      return sum;
+    },
+  }
 }
 
 </script>
