@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <StatusBar/>
+    <FilterBar/>
     <ProductTable/>
   </div>
 
@@ -9,10 +9,10 @@
 
 <script>
 import ProductTable from '../components/ProductTable.vue';
-import StatusBar from '../components/StatusBar.vue';
+import FilterBar from '../components/FilterBar.vue';
 
 export default {
-    components: { StatusBar, ProductTable}
+    components: { FilterBar, ProductTable}
 }
 </script>
 

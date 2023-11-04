@@ -8,7 +8,8 @@ export const useTableStore = defineStore("TableStore", {
         return {
             hiddenStatus: [],
             allCheck: false,
-            currentPage: 1
+            currentPage: 1,
+            filteringKey: '',
         }
     },
 
@@ -33,22 +34,36 @@ export const useTableStore = defineStore("TableStore", {
 
         getFilteredProductLength: (state) =>{
           let sum = 0 
+          let keysToIterateThrough = ["Product", "Status", "Cores", "Threads", "Lithography", "Max_Turbo_Freq", "Base_Freq"];
+
           data.forEach((element) => {
             let status = element.Status;
 
             // push status to set    
             if (state.hiddenStatus.includes(status)) return; // Hide by status
-            sum += 1
+            if(state.filteringKey) {
+              if(keysToIterateThrough.some((key) => String(element[key])
+                                                            .toLowerCase()
+                                                            .replace(/\s+/g, '')
+                                                            .includes(state.filteringKey)
+              )){
+                sum += 1
+              }
+            } else {
+                sum += 1
+            }
 
           });
           return sum;
         },
 
-        getProductsByPage: (state) => (page = 1) => {
+        getFilteredProductsByPage: (state) => (page = 1) => {
           let tmp = {};
           let counter = 0;
           let initialIndex = (page -1) * 100;
           let end = initialIndex + 100;
+          let keysToIterateThrough = ["Product", "Status", "Cores", "Threads", "Lithography", "Max_Turbo_Freq", "Base_Freq"];
+
 
           data.forEach((element) => {
             let status = element.Status;
@@ -58,9 +73,19 @@ export const useTableStore = defineStore("TableStore", {
             if (state.hiddenStatus.includes(status)) return; // Hide by status
             if (!tmp[status]) tmp[status] = {};
             if (!tmp[status][cores]) tmp[status][cores] = [];
-            
-            if(counter >= initialIndex  && counter < end){
-              tmp[status][cores].push(element);
+
+            if(counter >= initialIndex  && counter < end) {
+              if(state.filteringKey) {
+                if(keysToIterateThrough.some((key) => String(element[key])
+                                                                          .toLowerCase()
+                                                                          .replace(/\s+/g, '')
+                                                                          .includes(state.filteringKey)
+                )){
+                  tmp[status][cores].push(element);
+                }
+              } else {
+                tmp[status][cores].push(element);
+              }
             }
             counter ++;
 
@@ -98,6 +123,10 @@ export const useTableStore = defineStore("TableStore", {
 
           setCurrentPage(page) {
             this.currentPage = page;
+          },
+          
+          setfilteringKey(key) {
+            this.filteringKey = String(key).toLowerCase().replace(/\s+/g, '');
           }
 }
 })

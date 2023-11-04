@@ -1,6 +1,6 @@
 <template>
     <tbody>
-        <template v-for="(data, status, index) in getProductsbyPage(getCurrentPage)" :key="index">
+        <template v-for="(data, status, index) in getFilteredProductsByPage(getCurrentPage)" :key="index">
           <template v-for="cores in Object.keys(data)">
             <tr :style="{backgroundColor: statusColor[status] }" v-for="(v, k) in data[cores] " :key="k">
               <!-- status -->
@@ -65,8 +65,8 @@ export default {
   },
 
   computed: {
-    getProductsbyPage() {
-      return this.tableStore.getProductsByPage
+    getFilteredProductsByPage() {
+      return this.tableStore.getFilteredProductsByPage
     },
     getStatuses() {
       return this.tableStore.getStatusesForAllProducts
@@ -80,7 +80,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .innerCells {
   display: flex;
   flex-direction: row;
@@ -112,6 +112,15 @@ input[disabled] {
   cursor: text;
   background-color: inherit;
   color: black;
+}
+
+input[type="text"] {
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  border: 0;
 }
 
 
