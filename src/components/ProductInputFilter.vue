@@ -1,5 +1,5 @@
 <template>
-    <InputField @filterUpdated = "filteringKeyUpdated" label="Search"/>
+    <InputField @filterUpdated = "filteringKeyUpdated" label="Search" id="Search"/>
 </template>
 
 <script>
@@ -29,5 +29,7 @@ export default {
 
 
 <style>
+
+
 
 </style>

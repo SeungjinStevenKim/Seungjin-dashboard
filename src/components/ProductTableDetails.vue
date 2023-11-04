@@ -3,7 +3,7 @@
         <template v-for="(data, status, index) in getFilteredProductsByPage" :key="index">
           <!-- status -->
           <tr>
-            <td class="width1" :rowspan="calstatusRowspan(data)" :style="{backgroundColor: statusColor[status] }">
+            <td  class="width5" :rowspan="calstatusRowspan(data)" :style="{backgroundColor: statusColor[status] }">
               {{ status }}
             </td>
           </tr>
@@ -20,24 +20,24 @@
               <td class="productColumn">{{ v.Product }}</td>
 
               <!-- Lithography -->
-              <td>{{ v.Lithography }}</td>
+              <td  class="width1">{{ v.Lithography }}</td>
 
               <!-- Threads -->
-              <td>
-                <div class="innerCells">
+              <td class="width5">
+                <div class="innerCells" >
                   <input :value="v.Threads" :disabled="true" type="text" />
                 </div>
               </td>
 
               <!-- Base Freq -->
-              <td>
+              <td class="width5">
                 <div class="innerCells">
                   <input :value="v.Base_Freq" :disabled="true" type="text" />
                 </div>
               </td>
 
               <!-- Max Turbo Freq -->
-              <td>
+              <td class="width5">
                 <div class="innerCells">
                   <input :value="v.Max_Turbo_Freq" type="text" :disabled="true" />
                 </div>
@@ -94,6 +94,13 @@ export default {
 
 
 <style scoped>
+.width1 {
+  width: 1%;
+}
+.width5 {
+  width: 5%;
+}
+
 .innerCells {
   display: flex;
   flex-direction: row;
@@ -102,7 +109,7 @@ export default {
 }
 
 .productColumn {
-  width: 1%;
+  width: 10%;
 }
 
 .innerCells.comment {
