@@ -1,10 +1,10 @@
 <template>
-    <div class="pagination-container">
+    <div class="paginationContainer">
         <button
             type="button"
              :class="[
-                 'paginate-buttons',
-                  page === currentPage ? 'active-page' : ''
+                 'paginateButtons',
+                  page === currentPage ? 'activePage' : ''
             ]"
             v-for="page in pages"
             :key="page"
@@ -91,11 +91,11 @@ export default {
 
 
 <style>
-  .pagination-container {
+  .paginationContainer {
     display: flex;
     column-gap: 10px;
   }
-  .paginate-buttons {
+  .paginateButtons {
     height: 40px;
     width: 40px;
     border-radius: 20px;
@@ -104,15 +104,15 @@ export default {
     border: 1px solid rgb(217, 217, 217);
     color: black;
   }
-  .paginate-buttons:hover {
+  .paginateButtons:hover {
     background-color: #d8d8d8;
   }
-  .active-page {
+  .activePage {
     background-color: #3498db;
     border: 1px solid #3498db;
     color: white;
   }
-  .active-page:hover {
+  .activePage:hover {
     background-color: #2988c8;
   }
 </style>
