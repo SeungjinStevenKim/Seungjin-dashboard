@@ -4,7 +4,11 @@
       <ProductTableDetails/>
     </table>
     
-    <Pagination @changePage="changePage" :noOfItems="getNumberOfProducts" :currentPage="getCurrentPage" />
+    <Pagination @changePage="changePage"
+                :noOfItems="getNumberOfProducts" 
+                :currentPage="getCurrentPage" 
+                :itemsPerPage="getNumberOfItemsPerPage"
+    />
 </template>
 
 
@@ -20,8 +24,9 @@ export default {
 
     methods: {
         changePage(page) {
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
-            this.tableStore.setCurrentPage(page);
+          document.body.scrollTop = document.documentElement.scrollTop = 0;
+          this.tableStore.setCurrentPage(page);
+            
         }
     },
 
@@ -38,6 +43,9 @@ export default {
         },
         getCurrentPage() {
           return this.tableStore.getCurrentPage
+        },
+        getNumberOfItemsPerPage() {
+          return this.tableStore.getNumberOfItemsPerPage
         }
   },
 

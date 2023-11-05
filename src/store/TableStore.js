@@ -10,6 +10,7 @@ export const useTableStore = defineStore("TableStore", {
             hiddenStatus: [],
             allCheck: false,
             currentPage: 1,
+            numberOfItemsPerPage: 100,
             filteringKey: '',
             filteringColumns: []
         }
@@ -20,6 +21,7 @@ export const useTableStore = defineStore("TableStore", {
         getCurrentPage: (state) => state.currentPage,
         getHiddenStatus: (state) => state.hiddenStatus,
         getFilteringSelectedColumns: (state) => state.filteringColumns,
+        getNumberOfItemsPerPage: (state) => state.numberOfItemsPerPage,
         getStatusesForAllProducts: () => {
           const statusSet = new Set();
         
@@ -70,7 +72,7 @@ export const useTableStore = defineStore("TableStore", {
             return true;
           });
         
-          for (let i = (state.currentPage - 1) * 100; i < state.currentPage * 100; i++) {
+          for (let i = (state.currentPage - 1) * state.numberOfItemsPerPage; i < state.currentPage * state.numberOfItemsPerPage; i++) {
             const element = filteredData[i];
             if (!element) break;
           
