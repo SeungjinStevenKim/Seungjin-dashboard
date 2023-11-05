@@ -1,1 +1,2 @@
 export const TABLE_COLUMNS =  [ "Status", "Cores", "Product", "Threads", "Lithography", "Max_Turbo_Freq", "Base_Freq"];
+export const STATUS_ORDER =  ["Announced", "Discontinued", "Launched", "Launched (with IPU)"];

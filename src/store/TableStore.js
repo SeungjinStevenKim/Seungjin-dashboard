@@ -1,31 +1,29 @@
 import { defineStore } from "pinia";
 import data from "../assets/data.json";
-import { TABLE_COLUMNS } from '../constants';
+import { TABLE_COLUMNS, STATUS_ORDER } from '../constants';
 
 
 export const useTableStore = defineStore("TableStore", {
     state: () => {
-        //state
         return {
             hiddenStatus: [],
             allCheck: false,
             currentPage: 1,
             numberOfItemsPerPage: 100,
             filteringKey: '',
-            filteringColumns: []
+            filteringColumns: [],
+            data: data.sort((a, b) => STATUS_ORDER.indexOf(a.Status) - STATUS_ORDER.indexOf(b.Status))
         }
     },
-
-
     getters: {
         getCurrentPage: (state) => state.currentPage,
         getHiddenStatus: (state) => state.hiddenStatus,
         getFilteringSelectedColumns: (state) => state.filteringColumns,
         getNumberOfItemsPerPage: (state) => state.numberOfItemsPerPage,
-        getStatusesForAllProducts: () => {
+        getStatusesForAllProducts: (state) => {
           const statusSet = new Set();
         
-          data.forEach((element) => {
+          state.data.forEach((element) => {
             const status = element.Status;
             statusSet.add(status);
           });
@@ -35,7 +33,7 @@ export const useTableStore = defineStore("TableStore", {
       
         getFilteredProductLength: (state) => {
           const columns = state.filteringColumns.length > 0 ? state.filteringColumns : TABLE_COLUMNS;
-          return data.filter((element) => {
+          return state.data.filter((element) => {
             const status = element.Status;
           
             if (state.hiddenStatus.includes(status)) return false; // Hide by status
@@ -57,7 +55,7 @@ export const useTableStore = defineStore("TableStore", {
           const columns = state.filteringColumns.length > 0 ? state.filteringColumns : TABLE_COLUMNS;
 
         
-          const filteredData = data.filter((element) => {
+          const filteredData = state.data.filter((element) => {
             const status = element.Status;
           
             if (state.hiddenStatus.includes(status)) {
@@ -86,8 +84,6 @@ export const useTableStore = defineStore("TableStore", {
         
           return tmp;
       },
-
-
     },
     
     actions: {
