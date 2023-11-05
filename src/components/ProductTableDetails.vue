@@ -2,46 +2,26 @@
     <tbody>
         <template v-for="(data, status, index) in getFilteredProductsByPage" :key="index">
           <!-- status -->
-          <tr>
-            <td  class="width5" :rowspan="calstatusRowspan(data)" :style="{backgroundColor: statusColor[status] }">
-              {{ status }}
-            </td>
+          <tr :style="{backgroundColor: statusColor[status] }">
+            <ProductTableCell :value="status" :rowSpanVal="calstatusRowspan(data)" />
           </tr>
 
           <template v-for="cores in Object.keys(data)">
-            <tr>
-              <td class="width1" :rowspan="Object.keys(data[cores]).length + 1" :style="{backgroundColor: statusColor[status] }">
-                {{ cores }}
-              </td>
+            <tr :style="{backgroundColor: statusColor[status] }">
+              <ProductTableCell :value="cores" :rowSpanVal="Object.keys(data[cores]).length + 1" :isCoreColumn ='true' />
             </tr>
 
             <tr v-for="(v, k) in data[cores] " :key="k" :style="{backgroundColor: statusColor[status] }">
               <!-- product -->
-              <td class="productColumn">{{ v.Product }}</td>
-
+              <ProductTableCell :isProductColumn="true" :value="v.Product" />
               <!-- Lithography -->
-              <td  class="width1">{{ v.Lithography }}</td>
-
+              <ProductTableCell :value="v.Lithography"/>
               <!-- Threads -->
-              <td class="width5">
-                <div class="innerCells" >
-                  <input :value="v.Threads" :disabled="true" type="text" />
-                </div>
-              </td>
-
-              <!-- Base Freq -->
-              <td class="width5">
-                <div class="innerCells">
-                  <input :value="v.Base_Freq" :disabled="true" type="text" />
-                </div>
-              </td>
-
-              <!-- Max Turbo Freq -->
-              <td class="width5">
-                <div class="innerCells">
-                  <input :value="v.Max_Turbo_Freq" type="text" :disabled="true" />
-                </div>
-              </td>
+              <ProductTableCell :value="v.Threads"/>
+              <!-- Base_Freq -->
+              <ProductTableCell :value="v.Base_Freq"/>
+              <!-- Max_Turbo_Freq -->
+              <ProductTableCell :value="v.Max_Turbo_Freq"/>
             </tr>
           </template>
         </template>
@@ -52,9 +32,13 @@
 <script>
 import { useTableStore }  from '../store/TableStore';
 import { colorGenerator } from '../utils/colorGenerator';
+import ProductTableCell from './ProductTableCell.vue';
 
 export default {
-    data: function () {
+  components:{
+    ProductTableCell
+  },
+  data: function () {
     return {
       statusColor: {},
       tableStore : useTableStore(),
@@ -94,54 +78,15 @@ export default {
 
 
 <style scoped>
+
 .width1 {
   width: 1%;
 }
-.width5 {
-  width: 5%;
+.width2 {
+  width: 2%;
 }
 
-.innerCells {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
 
-.productColumn {
-  width: 10%;
-}
-
-.innerCells.comment {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-}
-
-input::placeholder {
-  color: black;
-}
-
-input:focus::-webkit-input-placeholder {
-  color: grey;
-}
-
-input[disabled] {
-  cursor: text;
-  background-color: inherit;
-  color: black;
-}
-
-input[type="text"] {
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  text-align: center;
-  border: 0;
-}
 
 
 </style>
