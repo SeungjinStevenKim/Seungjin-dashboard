@@ -1,60 +1,49 @@
 <template>
-    <div class="hideBar">
-        <div class="hideLabel"> Select Status that you want to hide from below table</div>
-          <div class="checkbox">
-            <!-- All status -->
-            <div>
-              <label :for="getStatuses">All statuses</label>
-              <input
-                :id="getStatuses"
-                type="checkbox"
-                class="styled"
-                :value="getStatuses"
-                @click="tableStore.hideShowALLstatus"
-              />
-            </div>
-            <!-- Dynamic status -->
-            <div v-for="status in getStatuses" :key="status">
-              <label :for="`${status}`">
-                {{ status }}
-              </label>
-
-              <input
-                :id="`${status}`"
-                type="checkbox"
-                class="styled"
-                :value="status"
-                v-model="tableStore.getHiddenStatus"
-                @click="tableStore.hideShowStatus(status)"
-              />
-          </div>
-        </div>
+  <div class="hideBar">
+    <div class="hideLabel">Select Status that you want to hide from below table</div>
+    <div class="checkbox">
+      <!-- All statuses -->
+      <div>
+        <label :for="tableStore.getStatusesForAllProducts">All statuses</label>
+        <input
+          :id="tableStore.getStatusesForAllProducts"
+          type="checkbox"
+          class="styled"
+          :value="tableStore.getStatusesForAllProducts"
+          @click="tableStore.hideShowALLstatus"
+        />
       </div>
+      <!-- Dynamic statuses -->
+      <div v-for="status in tableStore.getStatusesForAllProducts" :key="status">
+        <label :for="`${status}`">{{ status }}</label>
+        <input
+          :id="`${status}`"
+          type="checkbox"
+          class="styled"
+          :value="status"
+          v-model="tableStore.getHiddenStatus"
+          @click="tableStore.hideShowStatus(status)"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
-
 <script>
-import { useTableStore }  from '../store/TableStore';
+import { useTableStore } from '../store/TableStore';
+
 export default {
-
   setup() {
-    const tableStore = useTableStore()
+    const tableStore = useTableStore();
 
-    return { tableStore }
+    return {
+      tableStore
+    };
   },
-
-
-  computed: {
-    getStatuses() {
-      return this.tableStore.getStatusesForAllProducts
-    },
-  },
-
-}
+};
 </script>
 
 <style scoped>
-
 .hideBar {
   list-style: none;
   display: flex;
@@ -73,5 +62,4 @@ export default {
   justify-content: center;
   column-gap: 20px;
 }
-
 </style>
