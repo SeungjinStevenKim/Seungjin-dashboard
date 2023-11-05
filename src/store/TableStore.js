@@ -11,6 +11,7 @@ export const useTableStore = defineStore("TableStore", {
             allCheck: false,
             currentPage: 1,
             filteringKey: '',
+            filteringColumns: []
         }
     },
 
@@ -18,6 +19,7 @@ export const useTableStore = defineStore("TableStore", {
     getters: {
         getCurrentPage: (state) => state.currentPage,
         getHiddenStatus: (state) => state.hiddenStatus,
+        getFilteringSelectedColumns: (state) => state.filteringColumns,
         getStatusesForAllProducts: () => {
           const statusSet = new Set();
         
@@ -30,14 +32,15 @@ export const useTableStore = defineStore("TableStore", {
         },
       
         getFilteredProductLength: (state) => {
-        
+          const columns = state.filteringColumns.length > 0 ? state.filteringColumns : TABLE_COLUMNS;
           return data.filter((element) => {
             const status = element.Status;
           
             if (state.hiddenStatus.includes(status)) return false; // Hide by status
+
           
             if (state.filteringKey) {
-              return TABLE_COLUMNS.some((key) => String(element[key])
+              return columns.some((key) => String(element[key])
                 .toLowerCase()
                 .replace(/\s+/g, '')
                 .includes(state.filteringKey));
@@ -49,6 +52,8 @@ export const useTableStore = defineStore("TableStore", {
       
         getFilteredProductsByPage: (state) => {
           const tmp = {};
+          const columns = state.filteringColumns.length > 0 ? state.filteringColumns : TABLE_COLUMNS;
+
         
           const filteredData = data.filter((element) => {
             const status = element.Status;
@@ -58,7 +63,7 @@ export const useTableStore = defineStore("TableStore", {
             }
           
             if (state.filteringKey) {
-              const elementValues = TABLE_COLUMNS.map((key) => String(element[key]).toLowerCase().replace(/\s+/g, ''));
+              const elementValues = columns.map((key) => String(element[key]).toLowerCase().replace(/\s+/g, ''));
               return elementValues.some((value) => value.includes(state.filteringKey));
             }
           
@@ -79,6 +84,8 @@ export const useTableStore = defineStore("TableStore", {
         
           return tmp;
       },
+
+
     },
     
     actions: {
@@ -104,6 +111,7 @@ export const useTableStore = defineStore("TableStore", {
           
           setfilteringKey(key) {
             this.filteringKey = String(key).toLowerCase().replace(/\s+/g, '');
-          }
+          },
+          setFilteringSelectedColumns(column) { this.filteringColumns = [...column]}
 }
 })

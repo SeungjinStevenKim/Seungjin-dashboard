@@ -7,7 +7,9 @@
       :id="id"
       :type="type"
       :value="modelValue"
-      @input="updateInput"
+      @input="onUpdate"
+      @keyup.enter="onEnter"
+      class="inputField"
     />
   </div>
 </template>
@@ -31,12 +33,23 @@ export default {
     type: {
       type: String,
       default: "text",
-    }
+    },
+
   },
   methods: {
-    updateInput(event) {
-      this.$emit("filterUpdated", event.target.value);
+    onEnter(event) {
+      this.$emit("valueEntered", event.target.value);
+    },
+    onUpdate(event) {
+      this.$emit("valueUpdated", event.target.value);
     }
   }
 };
 </script>
+
+
+<style scoped>
+.inputField {
+  width: 100%;
+}
+</style>

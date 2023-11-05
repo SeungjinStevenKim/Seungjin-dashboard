@@ -1,5 +1,9 @@
 <template>
-    <InputField @filterUpdated = "filteringKeyUpdated" label="Search" id="Search"/>
+    <InputField @valueEntered = "updateFilteringKey"
+                @valueUpdated = "updateKeyIfEmpty"
+                label="Enter values that you want to search"
+                id="Enter values that you want to search"
+    />
 </template>
 
 <script>
@@ -18,9 +22,15 @@ export default {
   },
 
   methods: {
-    filteringKeyUpdated(key) {
+    updateFilteringKey(key) {
         this.tableStore.setfilteringKey(key);
         this.tableStore.setCurrentPage(1);
+    },
+    updateKeyIfEmpty(key) {
+        if(typeof key === "string" && key.length === 0) {
+            this.tableStore.setfilteringKey(key);
+            this.tableStore.setCurrentPage(1);
+        }
     }
   }
   

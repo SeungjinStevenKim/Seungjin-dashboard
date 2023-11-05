@@ -1,19 +1,26 @@
 <template>
-    <div class="filters-container">
+    <div class="productFilterLayout">
       <HideByStatusBar />
-      <ProductInputFilter />
+      <div class="filterContainer">
+        <FilteringColumnsSelect />
+        <ProductInputFilter />
+      </div>
+
     </div>
 
 </template>
 
 <script>
 import { useTableStore }  from '../store/TableStore';
+import FilteringColumnsSelect from './FilteringColumnsSelect.vue';
 import HideByStatusBar from './HideByStatusBar.vue';
 import ProductInputFilter from './ProductInputFilter.vue';
 
 export default {
   components: { ProductInputFilter,
-                HideByStatusBar },
+                HideByStatusBar,
+                FilteringColumnsSelect 
+              },
 
   setup() {
     const tableStore = useTableStore()
@@ -34,11 +41,17 @@ export default {
 
 <style scoped>
 
-.filters-container {
+.productFilterLayout {
     display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    column-gap: 30px;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+}
+
+.filterContainer {
+    display: flex;
+    width: 700px;
+    column-gap: 20px;
 }
 
 </style>

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@vue/compat": "^3.1.0",
+    "@vueform/multiselect": "^2.6.6",
     "pinia": "^2.1.7",
     "vue": "^3.2.41"
   },
