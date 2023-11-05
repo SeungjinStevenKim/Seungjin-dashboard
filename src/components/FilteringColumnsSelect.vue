@@ -27,7 +27,6 @@
 
     data() {
       return {
-        value: null,
         options: TABLE_COLUMNS
       }
     },
