@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import data from "../assets/data.json";
+import { TABLE_COLUMNS } from '../constants';
 
 
 export const useTableStore = defineStore("TableStore", {
@@ -29,7 +30,6 @@ export const useTableStore = defineStore("TableStore", {
         },
       
         getFilteredProductLength: (state) => {
-          const keysToIterateThrough = ["Product", "Status", "Cores", "Threads", "Lithography", "Max_Turbo_Freq", "Base_Freq"];
         
           return data.filter((element) => {
             const status = element.Status;
@@ -37,7 +37,7 @@ export const useTableStore = defineStore("TableStore", {
             if (state.hiddenStatus.includes(status)) return false; // Hide by status
           
             if (state.filteringKey) {
-              return keysToIterateThrough.some((key) => String(element[key])
+              return TABLE_COLUMNS.some((key) => String(element[key])
                 .toLowerCase()
                 .replace(/\s+/g, '')
                 .includes(state.filteringKey));
@@ -49,7 +49,6 @@ export const useTableStore = defineStore("TableStore", {
       
         getFilteredProductsByPage: (state) => {
           const tmp = {};
-          const keysToIterateThrough = ["Product", "Status", "Cores", "Threads", "Lithography", "Max_Turbo_Freq", "Base_Freq"];
         
           const filteredData = data.filter((element) => {
             const status = element.Status;
@@ -59,7 +58,7 @@ export const useTableStore = defineStore("TableStore", {
             }
           
             if (state.filteringKey) {
-              const elementValues = keysToIterateThrough.map((key) => String(element[key]).toLowerCase().replace(/\s+/g, ''));
+              const elementValues = TABLE_COLUMNS.map((key) => String(element[key]).toLowerCase().replace(/\s+/g, ''));
               return elementValues.some((value) => value.includes(state.filteringKey));
             }
           
