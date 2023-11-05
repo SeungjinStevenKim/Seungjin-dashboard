@@ -1,54 +1,45 @@
 <template>
-    <table>
-      <ProductTableHeader/>
-      <ProductTableDetails/>
-    </table>
-    
-    <Pagination @changePage="changePage"
-                :noOfItems="getNumberOfProducts" 
-                :currentPage="getCurrentPage" 
-                :itemsPerPage="getNumberOfItemsPerPage"
-    />
+  <table>
+    <ProductTableHeader />
+    <ProductTableDetails />
+  </table>
+
+  <Pagination
+    @changePage="changePage"
+    :noOfItems="getNumberOfProducts"
+    :currentPage="getCurrentPage"
+    :itemsPerPage="getNumberOfItemsPerPage"
+  />
 </template>
 
-
 <script>
+import { computed } from 'vue';
 import ProductTableHeader from './ProductTableHeader.vue';
 import ProductTableDetails from './ProductTableDetails.vue';
 import Pagination from './baseComponents/Pagination.vue';
-import { useTableStore }  from '../store/TableStore';
-
+import { useTableStore } from '../store/TableStore';
 
 export default {
-    components: { ProductTableHeader, ProductTableDetails, Pagination},
+  components: { ProductTableHeader, ProductTableDetails, Pagination },
 
-    methods: {
-        changePage(page) {
-          document.body.scrollTop = document.documentElement.scrollTop = 0;
-          this.tableStore.setCurrentPage(page);
-            
-        }
-    },
+  setup() {
+    const tableStore = useTableStore();
+    
+    const getNumberOfProducts = computed(() => tableStore.getFilteredProductLength);
+    const getCurrentPage = computed(() => tableStore.getCurrentPage);
+    const getNumberOfItemsPerPage = computed(() => tableStore.getNumberOfItemsPerPage);
 
-    data: function () {
-        return {
-            statusColor: {},
-            tableStore : useTableStore(),
-        };
-    },
+    const changePage = (page) => {
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+      tableStore.setCurrentPage(page);
+    };
 
-    computed: {
-        getNumberOfProducts() {
-          return this.tableStore.getFilteredProductLength
-        },
-        getCurrentPage() {
-          return this.tableStore.getCurrentPage
-        },
-        getNumberOfItemsPerPage() {
-          return this.tableStore.getNumberOfItemsPerPage
-        }
+    return {
+      getNumberOfProducts,
+      getCurrentPage,
+      getNumberOfItemsPerPage,
+      changePage,
+    };
   },
-
-}
+};
 </script>
-

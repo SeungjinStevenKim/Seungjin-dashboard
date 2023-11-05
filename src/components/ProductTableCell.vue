@@ -1,13 +1,14 @@
 <template>
-    <!-- Base Freq -->
-    <td :class="isCoreColumn ? 'coreCell' : 'cell' " :rowspan="rowSpanVal">
-        {{value}}
-    </td>
+  <td :class="cellClass" :rowspan="rowSpanVal">
+    {{ value }}
+  </td>
 </template>
 
 <script>
+import { computed } from 'vue';
+
 export default {
-  name: "ProductInfoCell",
+  name: 'ProductInfoCell',
   props: {
     value: {
       required: true,
@@ -18,10 +19,16 @@ export default {
     },
     rowSpanVal: {
       type: Number,
-    }
+    },
+  },
+  setup(props) {
+    const cellClass = computed(() => (props.isCoreColumn ? 'coreCell' : 'cell'));
+
+    return {
+      cellClass,
+    };
   },
 };
-
 </script>
 
 <style scoped>
@@ -33,5 +40,3 @@ export default {
   width: 1%;
 }
 </style>
-
-
