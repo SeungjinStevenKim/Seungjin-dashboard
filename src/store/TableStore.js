@@ -12,7 +12,8 @@ export const useTableStore = defineStore("TableStore", {
             numberOfItemsPerPage: 100,
             filteringKey: '',
             filteringColumns: [],
-            data: data.sort((a, b) => STATUS_ORDER.indexOf(a.Status) - STATUS_ORDER.indexOf(b.Status))
+            data: data.sort((a, b) => a.Cores - b.Cores).sort((a, b) => STATUS_ORDER.indexOf(a.Status) - STATUS_ORDER.indexOf(b.Status))
+
         }
     },
     getters: {
