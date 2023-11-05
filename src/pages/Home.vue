@@ -51,11 +51,6 @@ th {
 
 }
 
-.width1 {
-  width: 1%;
-  /* white-space: nowrap !important; */
-}
-
 
 
 </style>
