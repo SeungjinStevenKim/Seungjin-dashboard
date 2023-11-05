@@ -1,1 +1,1 @@
-export const TABLE_COLUMNS =  ["Product", "Status", "Cores", "Threads", "Lithography", "Max_Turbo_Freq", "Base_Freq"];
+export const TABLE_COLUMNS =  [ "Status", "Cores", "Product", "Threads", "Lithography", "Max_Turbo_Freq", "Base_Freq"];
