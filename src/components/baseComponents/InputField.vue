@@ -1,8 +1,6 @@
 <template>
   <div>
-    <label v-if="label" :for="id">
-      {{ label }}
-    </label>
+    <label v-if="label" :for="id">{{ label }}</label>
     <input
       :id="id"
       :type="type"
@@ -15,38 +13,53 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
-  name: "BaseInput",
+  name: 'BaseInput',
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     label: {
       type: String,
-      default: "",
+      default: '',
     },
     modelValue: {
       type: [String, Number],
-      default: "",
+      default: '',
     },
     type: {
       type: String,
-      default: "text",
+      default: 'text',
     },
-
   },
-  methods: {
-    onEnter(event) {
-      this.$emit("valueEntered", event.target.value);
-    },
-    onUpdate(event) {
-      this.$emit("valueUpdated", event.target.value);
-    }
-  }
+  setup(props, {emit}) {
+    const id = ref(props.id);
+    const label = ref(props.label);
+    const modelValue = ref(props.modelValue);
+    const type = ref(props.type);
+
+    const onEnter = (event) => {
+      emit('valueEntered', event.target.value);
+    };
+
+    const onUpdate = (event) => {
+      emit('valueUpdated', event.target.value);
+    };
+
+    return {
+      id,
+      label,
+      modelValue,
+      type,
+      onEnter,
+      onUpdate,
+    };
+  },
 };
 </script>
-
 
 <style scoped>
 .inputField {
