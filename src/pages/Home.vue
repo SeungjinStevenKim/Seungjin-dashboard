@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <FilterBar/>
+    <ProductFilters/>
     <ProductTable/>
   </div>
 
@@ -9,15 +9,14 @@
 
 <script>
 import ProductTable from '../components/ProductTable.vue';
-import FilterBar from '../components/FilterBar.vue';
+import ProductFilters from '../components/ProductFilters.vue';
 
 export default {
-    components: { FilterBar, ProductTable}
+    components: { ProductFilters, ProductTable}
 }
 </script>
 
 <style>
-
 
 .layout {
   display: flex;
