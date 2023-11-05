@@ -1,8 +1,8 @@
 <template>
     <InputField @valueEntered = "updateFilteringKey"
                 @valueUpdated = "updateKeyIfEmpty"
-                label="Enter values that you want to search"
-                id="Enter values that you want to search"
+                label="Type the value that you want to search and Press enter"
+                id="Type the value that you want to search and Press enter"
     />
 </template>
 
