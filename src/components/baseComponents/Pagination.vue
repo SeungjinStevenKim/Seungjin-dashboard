@@ -42,25 +42,29 @@ export default {
             const lastPage = pageCount.value;
             const maxVisiblePages = 10;
 
+            // If there are fewer pages
             if (lastPage <= maxVisiblePages) {
                 return Array.from({ length: lastPage }, (_, i) => i + 1);
             }
 
             const pages = [];
             const halfVisiblePages = Math.floor(maxVisiblePages / 2);
-
+       
+            // If the current page is within the first half of pages
             if (currentPage <= halfVisiblePages) {
                 for (let i = 1; i <= maxVisiblePages - 1; i++) {
                     pages.push(i);
                 }
                 pages.push('...');
                 pages.push(lastPage);
+             // If the current page is within the last half of visible pages
             } else if (currentPage >= lastPage - halfVisiblePages) {
                 pages.push(1);
                 pages.push('...');
                 for (let i = lastPage - maxVisiblePages + 2; i <= lastPage; i++) {
                     pages.push(i);
                 }
+            // if the current page is in the middle of the page
             } else {
                 pages.push(1);
                 pages.push('...');
