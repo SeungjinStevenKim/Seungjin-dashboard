@@ -42,7 +42,7 @@ export default {
             const lastPage = pageCount.value;
             const maxVisiblePages = 10;
 
-            // If there are fewer pages
+            // If there are fewer pages than maxVisible page
             if (lastPage <= maxVisiblePages) {
                 return Array.from({ length: lastPage }, (_, i) => i + 1);
             }
